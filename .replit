@@ -1,0 +1,7 @@
+# The .replit file configures the run button and environment for your Repl.
+
+run = "bash setup_exercise.sh && dune build && dune test"
+
+[nix]
+# Points to the replit.nix file we created earlier
+file = "replit.nix"
