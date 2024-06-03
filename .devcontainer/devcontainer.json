@@ -1,0 +1,16 @@
+{
+    "name": "OCaml Practice",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "freebroccolo.reasonml",
+          "hackwaly.ocaml"
+        ]
+      }
+    },
+    "postCreateCommand": "./setup_exercise.sh"
+  }
+  
