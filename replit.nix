@@ -1,8 +1,10 @@
 { pkgs }: {
   deps = [
-    pkgs.ocaml
-    pkgs.ocamlPackages.opam
-    pkgs.ocamlPackages.dune
-    pkgs.ocamlPackages.ounit
+    pkgs.ocamlPackages.ocaml
+    pkgs.ocamlPackages.dune_3
+    pkgs.ocamlPackages.ocaml-lsp
+    pkgs.ocamlPackages.findlib
+    pkgs.ocamlPackages.curly
+    pkgs.ocamlPackages.ounit2
   ];
 }
