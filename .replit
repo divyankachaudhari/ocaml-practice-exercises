@@ -1,7 +1,13 @@
-# The .replit file configures the run button and environment for your Repl.
+compile = ["dune", "build"]
+run = ["dune", "test"]
+entrypoint = "lib/task.ml"
+hidden = ["_build"]
 
-run = "opam init -ya --disable-sandboxing && eval $(opam env) && opam switch create 4.14.0 && eval $(opam env) && opam install -y dune ounit curly && dune build && dune test"
+[languages.OCaml]
+pattern = "**/*.{ml,mli}"
+
+[languages.OCaml.languageServer]
+start = "ocamllsp"
 
 [nix]
-# Points to the replit.nix file we created earlier
-file = "replit.nix"
+channel = "stable-23_11"
