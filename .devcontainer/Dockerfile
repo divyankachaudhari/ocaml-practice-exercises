@@ -1,26 +1,20 @@
-# Use the official OCaml image as the base image
-FROM ocaml/opam:ubuntu-22.04-ocaml-4.14
+FROM debian:latest
+RUN apt-get update && apt-get -y install sudo
+RUN useradd -m -s /bin/bash -G sudo anonymous && echo 'anonymous ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER anonymous
+WORKDIR /home/anonymous
 
-# Install system dependencies
-USER root
-RUN apt-get update && apt-get install -y \
-    sudo \
-    git \
-    curl \
-    wget \
-    build-essential
+RUN sudo apt-get install -y --no-install-recommends git opam ca-certificates
 
-# Set up OPAM and install OCaml packages
-USER opam
-RUN opam init -y --disable-sandboxing && \
-    eval $(opam env) && \
-    opam switch create 4.14.0 && \
-    eval $(opam env) && \
-    opam install -y dune ounit
+RUN opam init -ya --disable-sandboxing
 
-# Set permissions for setup scripts
-WORKDIR /workspace
-COPY setup_codespaces.sh setup_exercise.sh /workspace/
+ENV CAML_LD_LIBRARY_PATH=/home/anonymous/.opam/default/lib/stublibs:/home/anonymous/.opam/default/lib/ocaml/stublibs:/home/anonymous/.opam/default/lib/ocaml
+ENV OCAML_TOPLEVEL_PATH=/home/anonymous/.opam/default/lib/toplevel
+ENV MANPATH=:/home/anonymous/.opam/default/man
+ENV OPAM_SWITCH_PREFIX=/home/anonymous/.opam/default
+ENV PATH=/home/anonymous/.opam/default/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN opam install -y ocaml-lsp-server ocamlformat utop ounit2 curly
 RUN chmod +x setup_codespaces.sh setup_exercise.sh
 
 # Run the setup script

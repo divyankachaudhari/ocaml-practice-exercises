@@ -1,16 +1,10 @@
 {
     "name": "OCaml Practice",
-    "build": {
-      "dockerfile": "Dockerfile"
-    },
+    "dockerFile": "Dockerfile",
     "customizations": {
-      "vscode": {
-        "extensions": [
-          "freebroccolo.reasonml",
-          "hackwaly.ocaml"
-        ]
-      }
+        "vscode": {
+            "extensions": ["ocamllabs.ocaml-platform"]
+        }
     },
-    "postCreateCommand": "./setup_exercise.sh"
-  }
-  
+    "containerUser": "anonymous",
+}
