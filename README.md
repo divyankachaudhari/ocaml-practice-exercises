@@ -1,23 +1,89 @@
-# Syncing the Practice Folder from `ocaml/ocaml.org`
+### README.md
 
-To sync the `practice` folder with the latest updates from the `ocaml/ocaml.org` repository, follow these steps:
+---
 
-1. Add the original `ocaml/ocaml.org` repository as a remote (only needs to be done once):
+# OCaml Practice Exercises
 
+This repository contains practice exercises for learning OCaml. You can use this repository on various platforms: GitHub Codespaces, Replit, and locally with Jupyter Notebook or directly on your machine.
+
+## Getting Started
+
+### Prerequisites
+
+- Git
+- Docker (for local Jupyter Notebook setup)
+- Ensure the setup scripts have execute permissions:
+
+  ```sh
+  chmod +x setup_exercise.sh
+  ```
+
+### Clone the Repository
+
+```sh
+git clone https://github.com/yourusername/ocaml-practice-exercises.git
+cd ocaml-practice-exercises
+```
+
+## Running Locally
+
+1. **Ensure OPAM and Dependencies Are Installed:**
+
+   ```sh
+   opam init -y --disable-sandboxing
+   eval $(opam env)
+   opam switch create 4.14.0
+   eval $(opam env)
+   opam install -y dune ounit
    ```
-   git remote add upstream https://github.com/ocaml/ocaml.org.git
+
+2. **Run the Setup Script:**
+
+   ```sh
+   ./setup_exercise.sh
    ```
 
-2. Fetch the latest changes from the upstream repository:
+## Using GitHub Codespaces
 
-   ```
-   git fetch upstream
-   ```
+1. **Open in GitHub Codespaces:**
+   - Navigate to your repository on GitHub.
+   - Click the green "Code" button, select "Codespaces", and create a new codespace.
 
-3. Check out the `practice` folder from the upstream's main branch into your local repository:
+2. **Setup the Environment:**
+   - Codespaces will automatically use the `.devcontainer` configuration to set up the environment.
 
-   ```
-   git checkout upstream/main -- practice
-   ```
+3. **Run Exercises:**
+   - Open the terminal in Codespaces and run:
 
-After running these commands, the changes will be in your local repository. You can then commit and create a PR if necessary.
+     ```sh
+     ./setup_exercise.sh
+     ```
+
+## Using Replit
+
+1. **Import the Repository:**
+   - Go to [Replit](https://replit.com/).
+   - Click "Create", select "Import from GitHub", and enter your repository URL.
+
+2. **Setup the Environment:**
+   - Replit will use the `replit.nix` configuration to set up the environment.
+
+3. **Run Exercises:**
+   - Click the "Run" button on Replit to execute the setup script and follow the prompts:
+
+     ```sh
+     ./setup_exercise.sh
+     ```
+
+
+## Available Exercises
+
+The exercises are located in the `practice` directory. Each exercise includes:
+
+- `work/impl.ml`: Implementation template for you, the learner.
+- `answer/impl.ml`: Reference solution.
+- `ex.ml`: Function signatures and test cases.
+
+Example usage `practice/008`: Run `dune build --root .` to compile and `dune test --root . work` to test your implementation against test cases.s
+
+Exercise descriptions are in the `exercises` directory.
