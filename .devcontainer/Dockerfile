@@ -15,7 +15,3 @@ ENV OPAM_SWITCH_PREFIX=/home/anonymous/.opam/default
 ENV PATH=/home/anonymous/.opam/default/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN opam install -y ocaml-lsp-server ocamlformat utop ounit2 curly
-RUN chmod +x setup_codespaces.sh setup_exercise.sh
-
-# Run the setup script
-RUN ./setup_codespaces.sh
