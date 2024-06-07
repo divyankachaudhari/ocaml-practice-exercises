@@ -5,8 +5,6 @@
 # OCaml Practice Exercises
 
 This repository contains practice exercises for learning OCaml. You can use this repository on various platforms: GitHub Codespaces, Replit, and locally with Jupyter Notebook or directly on your machine.
-[Link Text](practice/008/work/impl.ml)
-
 
 ## Getting Started
 

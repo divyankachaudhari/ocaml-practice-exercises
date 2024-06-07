@@ -11,6 +11,8 @@ _build/
 # Dune generated files
 *.install
 
+*.ipynb_checkpoints/
+
 # Local OPAM switch
 _opam/
 

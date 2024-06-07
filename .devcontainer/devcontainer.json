@@ -2,9 +2,11 @@
     "name": "OCaml Practice",
     "dockerFile": "Dockerfile",
     "customizations": {
-        "vscode": {
-            "extensions": ["ocamllabs.ocaml-platform"]
-        }
+      "vscode": {
+        "extensions": ["ocamllabs.ocaml-platform"]
+      }
     },
     "containerUser": "anonymous",
-}
+    "postCreateCommand": "/home/anonymous/setup_exercise.sh"
+  }
+  
