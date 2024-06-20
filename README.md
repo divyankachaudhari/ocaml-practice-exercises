@@ -12,11 +12,6 @@ This repository contains practice exercises for learning OCaml. You can use this
 
 - Git
 - Docker (for local Jupyter Notebook setup)
-- Ensure the setup scripts have execute permissions:
-
-  ```sh
-  chmod +x setup_exercise.sh
-  ```
 
 ### Clone the Repository
 
@@ -26,6 +21,12 @@ cd ocaml-practice-exercises
 ```
 
 ## Running Locally
+
+- Ensure the setup scripts have execute permissions:
+
+  ```sh
+  chmod +x setup_exercise.sh
+  ```
 
 1. **Ensure OPAM and Dependencies Are Installed:**
 
@@ -53,6 +54,11 @@ cd ocaml-practice-exercises
    - Codespaces will automatically use the `.devcontainer` configuration to set up the environment.
 
 3. **Run Exercises:**
+  - Ensure the setup scripts have execute permissions:
+
+      ```sh
+      chmod +x setup_exercise.sh
+      ```
    - Open the terminal in Codespaces and run:
 
      ```sh
@@ -69,6 +75,12 @@ cd ocaml-practice-exercises
    - Replit will use the `replit.nix` configuration to set up the environment.
 
 3. **Run Exercises:**
+   - Ensure the setup scripts have execute permissions:
+
+      ```sh
+      chmod +x setup_exercise.sh
+      ```
+
    - Click the "Run" button on Replit to execute the setup script and follow the prompts:
 
      ```sh
@@ -87,3 +99,29 @@ The exercises are located in the `practice` directory. Each exercise includes:
 Example usage `practice/008`: Run `dune build --root .` to compile and `dune test --root . work` to test your implementation against test cases.s
 
 Exercise descriptions are in the `exercises` directory.
+
+## Using Jupyter Notebook
+
+Ensure that you've cloned `ocaml-practice-exercises` and are now in the repository.
+
+1. **Navigate into `jupyter` folder**
+   ```bash
+   cd jupyter
+   ``` 
+2. **Build the Docker Image**: One time setup
+   ```bash
+   docker build -t ocaml-jupyter .
+   ```
+3. **Run the Docker Container**
+   ```bash
+   docker run -p 8888:8888 -v $(pwd):/home/opam/work ocaml-jupyter
+   ```
+4. **Access the Jupyter Notebook**
+   - After running the container, you should see output in the terminal that includes a URL. It will look something like this:
+      ```bash
+      http://127.0.0.1:8888/tree
+      ```
+   - Copy this URL and paste it into your web browser's address bar. This will open the Jupyter Notebook interface where you can start working with OCaml notebooks.
+
+
+
