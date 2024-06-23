@@ -1,0 +1,6 @@
+2024-06-23T14:30:19+00:00 adsl178.16.6.132.manx.net#01 I: Start test last_tests:0:test_last_empty.
+2024-06-23T14:30:19+00:00 adsl178.16.6.132.manx.net#01 I: Test last_tests:0:test_last_empty is successful.
+2024-06-23T14:30:19+00:00 adsl178.16.6.132.manx.net#01 I: End test last_tests:0:test_last_empty.
+2024-06-23T14:30:19+00:00 adsl178.16.6.132.manx.net#01 I: Start test last_tests:2:test_last_multiple_elements.
+2024-06-23T14:30:19+00:00 adsl178.16.6.132.manx.net#01 I: Test last_tests:2:test_last_multiple_elements is successful.
+2024-06-23T14:30:19+00:00 adsl178.16.6.132.manx.net#01 I: End test last_tests:2:test_last_multiple_elements.
