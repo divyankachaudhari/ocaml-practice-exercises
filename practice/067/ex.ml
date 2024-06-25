@@ -6,7 +6,7 @@ module type Testable = sig
   val tree_of_string : string -> char binary_tree
 end
 
-module Make(Tested: Testable) : sig val v : OUnit2.test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
   
   let v = "string_of_tree and tree_of_string" >::: [
@@ -23,6 +23,7 @@ module Make(Tested: Testable) : sig val v : OUnit2.test end = struct
         in
         assert_equal ~printer:(fun x -> string_of_tree x) expected_tree (tree_of_string example_string));
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

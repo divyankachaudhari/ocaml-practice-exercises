@@ -10,7 +10,7 @@ module type Testable = sig
   val tree_height : 'a binary_tree -> int
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let test_hbal_tree () =
@@ -100,6 +100,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
       ]
     
   let v = "Height-Balanced Binary Trees" >::: [test_hbal_tree (); test_tree_height();]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

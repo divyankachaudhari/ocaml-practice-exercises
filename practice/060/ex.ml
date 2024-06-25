@@ -9,7 +9,7 @@ module type Testable = sig
   val max_nodes : int -> int
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let test_hbal_tree_nodes () =
@@ -95,6 +95,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
     test_max_nodes();  
     ]
 end
+  let run () = OUnit2.run_test_tt_main v
 
 module Work : Testable = Work.Impl
 module Answer : Testable = Answer.Impl

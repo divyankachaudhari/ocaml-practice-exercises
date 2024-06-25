@@ -5,7 +5,7 @@ module type Testable = sig
   val encode : 'a list -> 'a rle list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
   
   let example_tests = "encode" >::: [
@@ -19,6 +19,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Modified Run-Length Encoding" >::: [
     example_tests;
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

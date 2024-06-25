@@ -4,7 +4,7 @@ module type Testable = sig
   val encode : 'a list -> (int * 'a) list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "encode" >::: [
     "non-empty list" >:: (fun _ ->
       assert_equal [(4, "a"); (1, "b"); (2, "c"); (2, "a"); (1, "d"); (4, "e")]
@@ -16,6 +16,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Run-Length Encoding" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

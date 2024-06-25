@@ -4,7 +4,7 @@ module type Testable = sig
   val phi : int -> int
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "phi" >::: [
     "phi of 10" >:: (fun _ ->
       assert_equal 4 (Tested.phi 10));
@@ -17,6 +17,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Euler's Totient Function Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

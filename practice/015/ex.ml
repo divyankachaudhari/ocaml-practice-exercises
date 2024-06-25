@@ -4,7 +4,7 @@ module type Testable = sig
   val replicate : 'a list -> int -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "replicate" >::: [
     "list with replication" >:: (fun _ ->
       assert_equal ["a"; "a"; "a"; "b"; "b"; "b"; "c"; "c"; "c"]
@@ -23,6 +23,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Replicate the elements of a list a given number of times." >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

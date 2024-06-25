@@ -5,7 +5,7 @@ module type Testable = sig
   val decode : 'a rle list -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let example_tests = "decode" >::: [
@@ -20,6 +20,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Run-Length Decoding Tests" >::: [
     example_tests;
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

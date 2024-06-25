@@ -4,7 +4,7 @@ module type Testable = sig
   val is_prime : int -> bool
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let rec flag_prime n = function
     | [] -> []
     | p :: u ->
@@ -24,6 +24,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "is_prime Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

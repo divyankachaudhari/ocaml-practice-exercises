@@ -4,7 +4,7 @@ module type Testable = sig
   val remove_at : int -> 'a list -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "remove_at" >::: [
     "remove element at 1" >:: (fun _ ->
       assert_equal ["a"; "c"; "d"]
@@ -20,6 +20,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Remove the K'th Element Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

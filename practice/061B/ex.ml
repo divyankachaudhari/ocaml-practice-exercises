@@ -5,7 +5,7 @@ module type Testable = sig
   val leaves : 'a binary_tree -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct  
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct  
   let tests = [
      "empty_tree" >:: (fun _ -> assert_equal [] (Tested.leaves Empty));
      "one_internal" >:: (fun _ -> assert_equal [] (Tested.leaves (Node('a', Empty, Empty))));
@@ -14,6 +14,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   ]  
   let v = "leaves" >::: tests
 end
+  let run () = OUnit2.run_test_tt_main v
 
 module Work : Testable = Work.Impl
 

@@ -19,7 +19,7 @@ let timeit f a =
   let t1 = Unix.gettimeofday () in
   t1 -. t0
 
-  module Make(Tested: Testable) : sig val v : test end = struct
+  module Make(Tested: Testable) : sig val run : unit -> unit end = struct
     let test_values = [10090; 100090; 1000090]
 
     let compare_phi_functions () =
@@ -42,6 +42,7 @@ let timeit f a =
       "compare phi_naive and phi" >:: (fun _ -> compare_phi_functions ());
     ]
   end
+  let run () = OUnit2.run_test_tt_main v
 
 
 module Work : Testable = Work.Impl

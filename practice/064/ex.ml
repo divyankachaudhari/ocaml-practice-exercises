@@ -5,7 +5,7 @@ module type Testable = sig
   val layout_binary_tree_1 : 'a binary_tree -> ('a * int * int) binary_tree
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
   
   let v = "layout_binary_tree_1" >::: [
@@ -36,6 +36,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
         assert_equal expected_layout (Tested.layout_binary_tree_1 example_layout_tree)
       )
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl
