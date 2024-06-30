@@ -1,32 +1,42 @@
+type 'a binary_tree =
+  | Empty
+  | Node of 'a * 'a binary_tree * 'a binary_tree
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (list (binary_tree char))) "Test Empty Tree"
+  [Empty]
+  (hbal_tree 0)
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
+let _ = Alcotest.(check (list (binary_tree char))) "Test Single Node Tree"
+  [Node ('x', Empty, Empty)]
+  (hbal_tree 1)
 
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
+let _ = Alcotest.(check (list (binary_tree char))) "Test Height 2 Tree"
+  [Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty));
+   Node ('x', Node ('x', Empty, Empty), Empty);
+   Node ('x', Empty, Node ('x', Empty, Empty))]
+  (hbal_tree 2)
 
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 059 Tests:";
-    
-    print_endline "All tests completed."
-end
+let _ = Alcotest.(check int) "Test Empty Tree Height"
+  0
+  (tree_height Empty)
 
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check int) "Test Single Node Tree Height"
+  1
+  (tree_height (Node ('x', Empty, Empty)))
+
+let _ = Alcotest.(check int) "Test Multi Node Height 3 Tree"
+  3
+  (tree_height (Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)), Node ('x', Empty, Node ('x', Empty, Empty)))))
+
+let _ = Alcotest.(check int) "Test Different Heights Tree on both sides"
+  3
+  (tree_height (Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Node ('x', Empty, Empty)))))
+
+let _ = Alcotest.(check int) "Test Asymmetric Heights Tree"
+  3
+  (tree_height (Node ('x', Node ('x', Node ('x', Empty, Empty), Empty), Empty)))
+
+let _ = Alcotest.(check bool) "Test Random Tree Height is greater than or equal to 0"
+  true
+  (let height = tree_height (Node ('x', Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)), Node ('x', Empty, Node ('x', Empty, Empty))), Node ('x', Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)), Node ('x', Empty, Node ('x', Empty, Empty))))) in
+  height >= 0)

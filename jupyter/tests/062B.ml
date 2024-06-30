@@ -1,32 +1,10 @@
+type 'a binary_tree = | Empty | Node of 'a * 'a binary_tree * 'a binary_tree
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let example_tree =
+  Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+       Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
-
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
-
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 062B Tests:";
-    
-    print_endline "All tests completed."
-end
-
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check (list char)) "empty_tree" [] (at_level Empty 1)
+let _ = Alcotest.(check (list char)) "level_1_single_node" ['a'] (at_level example_tree 1)
+let _ = Alcotest.(check (list char)) "level_2_two_nodes" ['b'; 'c'] (at_level example_tree 2)
+let _ = Alcotest.(check (list char)) "level_3_four_nodes" ['d'; 'e'; 'f'] (at_level example_tree 3)

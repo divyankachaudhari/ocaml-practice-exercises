@@ -1,32 +1,9 @@
+type 'a rle = One of 'a | Many of int * 'a
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (list (variant [pair int string; string]))) "encode non-empty list"
+  [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")]
+  (encode ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"])
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
-
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
-
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 011 Tests:";
-    
-    print_endline "All tests completed."
-end
-
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check (list (variant [pair int string; string]))) "encode empty list" 
+  [] 
+  (encode [])

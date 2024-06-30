@@ -1,32 +1,65 @@
+type 'a binary_tree =
+  | Empty
+  | Node of 'a * 'a binary_tree * 'a binary_tree
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (list (binary_tree char))) "Test Height-Balanced Trees for Height 1"
+  [Node ('x', Empty, Empty)]
+  (hbal_tree_nodes 1)
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
+let _ = Alcotest.(check (list (binary_tree char))) "Test Height-Balanced Trees for Height 2"
+  [Node ('x', Node ('x', Empty, Empty), Empty); Node ('x', Empty, Node ('x', Empty, Empty))]
+  (hbal_tree_nodes 2)
 
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
+let _ = Alcotest.(check (list (binary_tree char))) "Test Height-Balanced Trees for Height 0"
+  [Empty]
+  (hbal_tree_nodes 0)
 
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 060 Tests:";
-    
-    print_endline "All tests completed."
-end
+let _ = Alcotest.(check int) "Test min_nodes for h = 0"
+  0
+  (min_nodes 0)
 
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check int) "Test min_nodes for h = 1"
+  1
+  (min_nodes 1)
+
+let _ = Alcotest.(check int) "Test min_nodes for h = 2"
+  2
+  (min_nodes 2)
+
+let _ = Alcotest.(check int) "Test min_nodes for h = 3"
+  4
+  (min_nodes 3)
+
+let _ = Alcotest.(check int) "Test max_nodes for h = 0"
+  0
+  (max_nodes 0)
+
+let _ = Alcotest.(check int) "Test max_nodes for h = 1"
+  1
+  (max_nodes 1)
+
+let _ = Alcotest.(check int) "Test max_nodes for h = 2"
+  3
+  (max_nodes 2)
+
+let _ = Alcotest.(check int) "Test max_nodes for h = 3"
+  7
+  (max_nodes 3)
+
+let _ = Alcotest.(check int) "Test max_nodes for h = 5"
+  31
+  (max_nodes 5)
+
+let _ = Alcotest.(check int) "Test max_nodes for h = 6"
+  63
+  (max_nodes 6)
+
+let _ = Alcotest.(check int) "Boundary Test for max_nodes h = 31"
+  2147483647
+  (max_nodes 31)
+
+let _ = Alcotest.(check_raises "Invalid_argument max_nodes" (Invalid_argument "max_nodes")) "Boundary Test for max_nodes h = 32"
+  (fun () -> max_nodes 32)
+
+let _ = Alcotest.(check_raises "Invalid_argument max_nodes" (Invalid_argument "max_nodes")) "Boundary Test for max_nodes with large input"
+  (fun () -> max_nodes max_int)

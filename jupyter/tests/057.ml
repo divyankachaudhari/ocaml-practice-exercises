@@ -1,32 +1,16 @@
+type 'a binary_tree =
+  | Empty
+  | Node of 'a * 'a binary_tree * 'a binary_tree
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (binary_tree int)) "construct_test"
+  (Node (3, Node (2, Node (1, Empty, Empty), Empty),
+         Node (5, Empty, Node (7, Empty, Empty))))
+  (construct [3; 2; 5; 7; 1])
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
+let _ = Alcotest.(check bool) "symmetric_test 1"
+  true
+  (is_symmetric (construct [5; 3; 18; 1; 4; 12; 21]))
 
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
-
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 057 Tests:";
-    
-    print_endline "All tests completed."
-end
-
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check bool) "symmetric_test 2"
+  false
+  (is_symmetric (construct [3; 2; 5; 7; 4]))

@@ -33,7 +33,7 @@ RUN mkdir -p /home/opam/work
 
 # Setup Jupyter and OCaml Jupyter kernel
 RUN opam update && \
-    opam install jupyter ocamlfind ounit2 && \
+    opam install jupyter ocamlfind ounit2 alcotest && \
     opam exec -- ocaml-jupyter-opam-genspec && \
     jupyter kernelspec install --user /home/opam/.opam/4.14/share/jupyter
 

@@ -1,32 +1,16 @@
-
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
-
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
-
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
+let rec flag_prime n = function
+  | [] -> []
+  | p :: u ->
+    if n = p then
+      (p, true) :: flag_prime (n + 1) u
     else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
+      (n, false) :: flag_prime (n + 1) (p :: u)
 
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 031 Tests:";
-    
-    print_endline "All tests completed."
-end
+let primes = [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 41; 43; 47; 53; 59; 61; 67; 71; 73; 79; 83; 89; 97]
 
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ =
+  let test_cases = flag_prime 0 primes in
+  List.iter (fun (n, p) ->
+    let test_name = Printf.sprintf "is_prime %d" n in
+    Alcotest.(check bool) test_name p (is_prime n)
+  ) test_cases

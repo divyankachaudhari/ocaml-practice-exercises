@@ -1,32 +1,19 @@
+let _ = Alcotest.(check (list string)) "drop every 3rd from list" 
+  ["a"; "b"; "d"; "e"; "g"; "h"; "j"] 
+  (drop ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 3)
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (list string)) "drop with empty list" 
+  [] 
+  (drop [] 3)
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
+let _ = Alcotest.(check (list string)) "drop with n larger than list length" 
+  ["a"; "b"] 
+  (drop ["a"; "b"] 3)
 
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
+let _ = Alcotest.(check (list string)) "drop with n equal to 0 (edge case)" 
+  ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 
+  (drop ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 0)
 
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 016 Tests:";
-    
-    print_endline "All tests completed."
-end
-
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check (list string)) "drop with n equal to 1" 
+  [] 
+  (drop ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 1)

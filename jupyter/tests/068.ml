@@ -1,32 +1,16 @@
+type 'a binary_tree = | Empty | Node of 'a * 'a binary_tree * 'a binary_tree
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (list char)) "test_preorder_works_correctly"
+  ['a'; 'b'; 'd'; 'e'; 'c'; 'f'; 'g']
+  (preorder (Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+                   Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))))
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
+let _ = Alcotest.(check (list char)) "test_inorder_works_correctly"
+  ['d'; 'b'; 'e'; 'a'; 'c'; 'g'; 'f']
+  (inorder (Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+                  Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))))
 
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
-
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 068 Tests:";
-    
-    print_endline "All tests completed."
-end
-
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check (binary_tree char)) "test_pre_in_tree_works_correctly"
+  (Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+         Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty))))
+  (pre_in_tree ['a'; 'b'; 'd'; 'e'; 'c'; 'f'; 'g'] ['d'; 'b'; 'e'; 'a'; 'c'; 'g'; 'f'])

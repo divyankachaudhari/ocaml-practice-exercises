@@ -1,35 +1,15 @@
+let primes = [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 41; 43; 47; 53; 59; 61; 67; 71;
+  73; 79; 83; 89; 97; 101; 103; 107; 109; 113; 127; 131; 137; 139; 149; 151;
+  157; 163; 167; 173; 179; 181; 191; 193; 197; 199]
 
-module Test = struct
-  (* Helper function to convert list to string for printing. *)
-  let list_to_string convert lst =
-    "[" ^ (String.concat "; " (List.map convert lst)) ^ "]"
+let _ = Alcotest.(check (list int)) "all primes in range 0 to 200"
+  primes
+  (all_primes 0 200)
 
-  (* Helper function to convert option to string for printing. *)
-  let option_to_string convert opt =
-    match opt with
-    | None -> "None"
-    | Some v -> "Some " ^ convert v
+let _ = Alcotest.(check (list int)) "all primes in range 50 to 150"
+  (List.filter (fun n -> 50 <= n && n <= 150) primes)
+  (all_primes 50 150)
 
-  (* Function to assert equality of 'a option types, and print result. *)
-  let assert_equal expected actual =
-    if expected = actual then
-      Printf.printf "✓ Test passed\n"
-    else
-      Printf.printf "✗ Test failed\nExpected: %s\nGot: %s\n"
-        (option_to_string string_of_int expected)
-        (option_to_string string_of_int actual)
-
-  (* Run all tests. *)
-  let run_tests () =
-    print_endline "--------------------------------------";
-    print_endline "Running Exercise 039 Tests:";
-    
-    print_endline "Test: Exercise 039 case 1";
-    assert_equal (List.filter (fun n -> 50 <= n && n <= 150) primes) (all_primes 50 150);
-        
-    print_endline "All tests completed."
-end
-
-(* Execute the tests and suppress any final output from this cell *)
-let () = Test.run_tests ();;
-    
+let _ = Alcotest.(check (list int)) "no primes in range 150 to 50"
+  []
+  (all_primes 150 50)
