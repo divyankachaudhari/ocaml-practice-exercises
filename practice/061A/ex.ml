@@ -5,7 +5,7 @@ module type Testable = sig
   val count_leaves : 'a binary_tree -> int
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
   
   let tests = [
@@ -16,6 +16,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   ]
   let v = "count_leaves" >::: List.map (fun (name, _) -> name >:: fun _ -> ()) tests
 end
+  let run () = OUnit2.run_test_tt_main v
 
 module Work : Testable = Work.Impl
 

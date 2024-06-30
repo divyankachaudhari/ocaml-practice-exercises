@@ -4,7 +4,7 @@ module type Testable = sig
   val goldbach_list : int -> int -> (int * (int * int)) list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
 
   let tests = "Goldbach's compositions" >::: [
 
@@ -15,6 +15,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Goldbach_composition" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

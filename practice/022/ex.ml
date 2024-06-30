@@ -4,7 +4,7 @@ module type Testable = sig
   val range : int -> int -> int list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "range" >::: [
     "ascending order" >:: (fun _ ->
       assert_equal [4; 5; 6; 7; 8; 9]
@@ -20,6 +20,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Create List from Range Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

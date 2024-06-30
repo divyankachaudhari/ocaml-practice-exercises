@@ -5,7 +5,7 @@ module type Testable = sig
   val at_level : 'a binary_tree -> int -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
   
   let example_tree =
@@ -18,6 +18,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
     "level_2_two_nodes" >:: (fun _ -> assert_equal ['b'; 'c'] (Tested.at_level example_tree 2));
     "level_3_four_nodes" >:: (fun _ -> assert_equal ['d'; 'e'; 'f'] (Tested.at_level example_tree 3));
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

@@ -4,7 +4,7 @@ module type Testable = sig
   val drop : 'a list -> int -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "drop" >::: [
     "drop every 3rd from list" >:: (fun _ ->
       assert_equal ["a"; "b"; "d"; "e"; "g"; "h"; "j"]
@@ -26,6 +26,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Drop Every N'th Element Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

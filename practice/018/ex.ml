@@ -4,7 +4,7 @@ module type Testable = sig
   val slice : 'a list -> int -> int -> 'a list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "slice" >::: [
     "slice from list" >:: (fun _ ->
       assert_equal ["c"; "d"; "e"; "f"; "g"]
@@ -23,6 +23,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Extract a Slice From a List Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

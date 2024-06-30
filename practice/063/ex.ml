@@ -5,7 +5,7 @@ module type Testable = sig
   val complete_binary_tree : 'a list -> 'a binary_tree
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let v = "complete_binary_tree" >::: [
     "empty_list" >:: (fun _ -> assert_equal Tested.Empty (Tested.complete_binary_tree []));
 
@@ -26,6 +26,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
       in
       assert_equal expected_tree result);
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

@@ -4,7 +4,7 @@ module type Testable = sig
   val huffman : (string * int) list -> (string * string) list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let example_tests = "Huffman" >::: [
     "Test" >:: (fun _ ->
       assert_equal
@@ -17,6 +17,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
 
   let v = "Huffman Tests" >::: [example_tests]
 end
+  let run () = OUnit2.run_test_tt_main v
 
 
 module Work : Testable = Work.Impl

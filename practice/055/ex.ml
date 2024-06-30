@@ -7,7 +7,7 @@ module type Testable = sig
   val cbal_tree : int -> char binary_tree list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let test_cbal_tree () =
@@ -41,6 +41,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
     ]
 
   let v = "Completely Balanced Binary Trees" >::: [test_cbal_tree ()]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

@@ -7,7 +7,7 @@ module type Testable = sig
   val is_symmetric : 'a binary_tree -> bool
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let example_tests = "Symmetric Binary Trees" >::: [
@@ -33,6 +33,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
 
   let v = "Symmetric Binary Trees Tests" >::: [example_tests]
 end
+  let run () = OUnit2.run_test_tt_main v
 
 
 module Work : Testable = Work.Impl

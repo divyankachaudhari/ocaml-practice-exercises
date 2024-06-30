@@ -4,7 +4,7 @@ module type Testable = sig
   val coprime : int -> int -> bool
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let tests = "coprime" >::: [
     "coprime numbers" >:: (fun _ ->
       assert_bool "13 and 27 should be coprime" (Tested.coprime 13 27));
@@ -15,6 +15,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "Coprime Tests" >::: [
     tests
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

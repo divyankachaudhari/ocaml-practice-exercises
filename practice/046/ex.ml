@@ -11,7 +11,7 @@ module type Testable = sig
   val table2 : string -> string -> bool_expr -> (bool * bool * bool) list
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let example_tests = "table2" >::: [
@@ -29,6 +29,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
   let v = "truth table for a two-variable tests" >::: [
     example_tests;
   ]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl

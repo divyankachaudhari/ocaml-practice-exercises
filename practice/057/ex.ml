@@ -8,7 +8,7 @@ module type Testable = sig
   val construct : 'a list -> 'a binary_tree
 end
 
-module Make(Tested: Testable) : sig val v : test end = struct
+module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
   let test_construct () =
@@ -28,6 +28,7 @@ module Make(Tested: Testable) : sig val v : test end = struct
     )
 
   let v = "Binary Search Trees Tests" >::: [test_construct (); test_symmetric ()]
+  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl
