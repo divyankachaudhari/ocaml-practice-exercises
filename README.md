@@ -124,4 +124,7 @@ Ensure that you've cloned `ocaml-practice-exercises` and are now in the reposito
    - Copy this URL and paste it into your web browser's address bar. This will open the Jupyter Notebook interface where you can start working with OCaml notebooks.
 
 
-
+Learn OCaml Platform
+```
+docker run --platform linux/amd64 --rm -v /Users/divyanka/ocaml-practice-exercises/learn-ocaml-repository:/repository:ro -v learn-ocaml-sync:/sync -p 80:8080 --name learn-ocaml-server ocamlsf/learn-ocaml:master
+```

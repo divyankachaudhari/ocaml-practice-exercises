@@ -1,32 +1,48 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
-  type 'a binary_tree = | Empty | Node of 'a * 'a binary_tree * 'a binary_tree
+  type 'a binary_tree = 
+    | Empty 
+    | Node of 'a * 'a binary_tree * 'a binary_tree
   val complete_binary_tree : 'a list -> 'a binary_tree
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
-  let v = "complete_binary_tree" >::: [
-    "empty_list" >:: (fun _ -> assert_equal Tested.Empty (Tested.complete_binary_tree []));
+  let test_empty_list () =
+    check (testable (fun fmt -> function Empty -> Format.fprintf fmt "Empty" | _ -> Format.fprintf fmt "Not Empty") (=))
+      "empty_list" Empty (complete_binary_tree [])
 
-    "single_node" >:: (fun _ ->
-      let result = Tested.complete_binary_tree [1] in
-      assert_equal (Tested.Node(1, Tested.Empty, Tested.Empty)) result);
+  let test_single_node () =
+    let result = complete_binary_tree [1] in
+    check (testable (fun fmt -> function Node (v, _, _) -> Format.fprintf fmt "Node(%d)" v | _ -> Format.fprintf fmt "Empty") (=))
+      "single_node" (Node(1, Empty, Empty)) result
 
-    "small_list" >:: (fun _ ->
-      let result = Tested.complete_binary_tree [1; 2; 3] in
-      assert_equal (Tested.Node(1, Tested.Node(2, Tested.Empty, Tested.Empty), Tested.Node(3, Tested.Empty, Tested.Empty))) result);
+  let test_small_list () =
+    let result = complete_binary_tree [1; 2; 3] in
+    let expected_tree = Node(1, Node(2, Empty, Empty), Node(3, Empty, Empty)) in
+    check (testable (fun fmt -> function Node (v, _, _) -> Format.fprintf fmt "Node(%d)" v | _ -> Format.fprintf fmt "Empty") (=))
+      "small_list" expected_tree result
 
-    "larger_list" >:: (fun _ ->
-      let result = Tested.complete_binary_tree [1; 2; 3; 4; 5; 6] in
-      let expected_tree =
-        Tested.Node(1,
-          Tested.Node(2, Tested.Node(4, Tested.Empty, Tested.Empty), Tested.Node(5, Tested.Empty, Tested.Empty)),
-          Tested.Node(3, Tested.Node(6, Tested.Empty, Tested.Empty), Tested.Empty))
-      in
-      assert_equal expected_tree result);
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let test_larger_list () =
+    let result = complete_binary_tree [1; 2; 3; 4; 5; 6] in
+    let expected_tree =
+      Node(1,
+        Node(2, Node(4, Empty, Empty), Node(5, Empty, Empty)),
+        Node(3, Node(6, Empty, Empty), Empty))
+    in
+    check (testable (fun fmt -> function Node (v, _, _) -> Format.fprintf fmt "Node(%d)" v | _ -> Format.fprintf fmt "Empty") (=))
+      "larger_list" expected_tree result
+
+  let run () =
+    let open Alcotest in
+    run "complete_binary_tree" [
+      "complete_binary_tree", [
+        test_case "empty_list" `Quick test_empty_list;
+        test_case "single_node" `Quick test_single_node;
+        test_case "small_list" `Quick test_small_list;
+        test_case "larger_list" `Quick test_larger_list;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

@@ -1,4 +1,4 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   type bool_expr =
@@ -6,30 +6,31 @@ module type Testable = sig
     | Not of bool_expr
     | And of bool_expr * bool_expr
     | Or of bool_expr * bool_expr
-  
- 
+
   val table2 : string -> string -> bool_expr -> (bool * bool * bool) list
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
-  let example_tests = "table2" >::: [
-    "example 1" >:: (fun _ ->
-      assert_equal
-        [(true, true, true); (true, false, true); (false, true, false); (false, false, false)]
-        (table2 "a" "b" (And (Var "a", Or (Var "a", Var "b")))));
-    "example 2" >:: (fun _ ->
-      assert_equal
-        [(true, true, true); (true, false, true); (false, true, false); (false, false, false)]
-        (table2 "a" "b" (Or (Var "a", And (Var "a", Var "b"))))); 
-   
-  ]
-  
-  let v = "truth table for a two-variable tests" >::: [
-    example_tests;
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let test_example_1 () =
+    check (list (triple bool bool bool)) "example 1" 
+      [(true, true, true); (true, false, true); (false, true, false); (false, false, false)]
+      (table2 "a" "b" (And (Var "a", Or (Var "a", Var "b"))))
+
+  let test_example_2 () =
+    check (list (triple bool bool bool)) "example 2" 
+      [(true, true, true); (true, false, true); (false, true, false); (false, false, false)]
+      (table2 "a" "b" (Or (Var "a", And (Var "a", Var "b"))))
+
+  let run () =
+    let open Alcotest in
+    run "Truth Table for Two Variables Tests" [
+      "table2", [
+        test_case "example 1" `Quick test_example_1;
+        test_case "example 2" `Quick test_example_2;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

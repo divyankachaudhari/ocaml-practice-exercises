@@ -1,21 +1,24 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   val goldbach : int -> int * int
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
-  let tests = "Goldbach's conjecture" >::: [
-    "goldbach of 4" >:: (fun _ ->
-      assert_equal (2, 2) (Tested.goldbach 4));
-    "goldbach of 28" >:: (fun _ ->
-      assert_equal (5, 23) (Tested.goldbach 28));
-  ]
+  let test_goldbach_of_4 () =
+    check (pair int int) "goldbach of 4" (2, 2) (Tested.goldbach 4)
 
-  let v = "Tests for Goldbach's Conjecture" >::: [
-    tests
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let test_goldbach_of_28 () =
+    check (pair int int) "goldbach of 28" (5, 23) (Tested.goldbach 28)
+
+  let run () =
+    let open Alcotest in
+    run "Goldbach's Conjecture Tests" [
+      "goldbach", [
+        test_case "goldbach of 4" `Quick test_goldbach_of_4;
+        test_case "goldbach of 28" `Quick test_goldbach_of_28;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

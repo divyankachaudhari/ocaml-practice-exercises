@@ -1,24 +1,23 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   val huffman : (string * int) list -> (string * string) list
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
-  let example_tests = "Huffman" >::: [
-    "Test" >:: (fun _ ->
-      assert_equal
-        [("a", "0"); ("c", "100"); ("b", "101"); ("f", "1100"); ("e", "1101"); ("d", "111")]
-        (Tested.huffman [("a", 45); ("b", 13); ("c", 12); ("d", 16); ("e", 9); ("f", 5)]))
-  
-  ]
+  let test_huffman () =
+    check (list (pair string string)) "Test" 
+      [("a", "0"); ("c", "100"); ("b", "101"); ("f", "1100"); ("e", "1101"); ("d", "111")]
+      (Tested.huffman [("a", 45); ("b", 13); ("c", 12); ("d", 16); ("e", 9); ("f", 5)])
 
-  
-
-  let v = "Huffman Tests" >::: [example_tests]
+  let run () =
+    let open Alcotest in
+    run "Huffman Tests" [
+      "huffman", [
+        test_case "Test" `Quick test_huffman;
+      ]
+    ]
 end
-  let run () = OUnit2.run_test_tt_main v
-
 
 module Work : Testable = Work.Impl
 module Answer : Testable = Answer.Impl

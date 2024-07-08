@@ -1,4 +1,4 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   type 'a rle = One of 'a | Many of int * 'a
@@ -6,21 +6,22 @@ module type Testable = sig
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
-  open Tested
+  let test_single_element () =
+    check (list string) "Single Element" 
+      ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"]
+      (Tested.decode [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")])
 
-  let example_tests = "decode" >::: [
-  "Single Element" >:: (fun _ ->
-    assert_equal ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"]
-      (decode [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")]));
+  let test_empty_list () =
+    check (list string) "empty list" [] (Tested.decode [])
 
-  "empty list" >:: (fun _ ->
-    assert_equal [] (decode []))
-]
-  
-  let v = "Run-Length Decoding Tests" >::: [
-    example_tests;
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let run () =
+    let open Alcotest in
+    run "Run-Length Decoding Tests" [
+      "decode", [
+        test_case "Single Element" `Quick test_single_element;
+        test_case "empty list" `Quick test_empty_list;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

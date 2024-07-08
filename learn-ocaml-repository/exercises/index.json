@@ -1,0 +1,13 @@
+{
+  "learnocaml_version": "1",
+  "groups": {
+    "demo": {
+      "title": "Demo exercise pack",
+      "exercises": ["demo", "demo2"]
+    },
+    "ocaml.org exercises": {
+      "title": "OCaml.org Exercises",
+      "exercises": ["001", "002", "003", "004"]
+    }
+  }
+}

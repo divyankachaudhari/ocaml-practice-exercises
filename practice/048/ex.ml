@@ -1,4 +1,4 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   type bool_expr =
@@ -12,20 +12,21 @@ end
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
-  let example_tests = "table" >::: [
-    "example 1" >:: (fun _ ->
-      assert_equal
-        [([("a", true); ("b", true)], true);
-         ([("a", true); ("b", false)], true);
-         ([("a", false); ("b", true)], false);
-         ([("a", false); ("b", false)], false)]
-        (table ["a"; "b"] (And (Var "a", Or (Var "a", Var "b")))));
-  ]
-  
-  let v = "Truth Tables for Logical Expressions Tests" >::: [
-    example_tests;
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let test_example_1 () =
+    check (list (pair (list (pair string bool)) bool)) "example 1" 
+      [([("a", true); ("b", true)], true);
+       ([("a", true); ("b", false)], true);
+       ([("a", false); ("b", true)], false);
+       ([("a", false); ("b", false)], false)]
+      (table ["a"; "b"] (And (Var "a", Or (Var "a", Var "b"))))
+
+  let run () =
+    let open Alcotest in
+    run "Truth Tables for Logical Expressions Tests" [
+      "table", [
+        test_case "example 1" `Quick test_example_1;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

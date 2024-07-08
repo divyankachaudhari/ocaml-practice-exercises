@@ -1,4 +1,4 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   type 'a rle = One of 'a | Many of int * 'a
@@ -6,20 +6,30 @@ module type Testable = sig
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
-  open Tested
+  let test_single_elements () =
+    check (list (fun (rle: string Tested.rle) -> 
+      match rle with 
+      | One x -> "One " ^ x 
+      | Many (n, x) -> "Many (" ^ string_of_int n ^ ", " ^ x ^ ")")) 
+      "single elements" 
+      [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")]
+      (Tested.encode ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"])
 
-  let example_tests = "encode" >::: [
-    "single elements" >:: (fun _ ->
-      assert_equal [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")]
-        (encode ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"]));
-    "empty list" >:: (fun _ ->
-      assert_equal [] (encode []));
-  ]
-  
-  let v = "Run-Length Encoding Tests" >::: [
-    example_tests;
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let test_empty_list () =
+    check (list (fun (rle: string Tested.rle) -> 
+      match rle with 
+      | One x -> "One " ^ x 
+      | Many (n, x) -> "Many (" ^ string_of_int n ^ ", " ^ x ^ ")")) 
+      "empty list" [] (Tested.encode [])
+
+  let run () =
+    let open Alcotest in
+    run "Run-Length Encoding Tests" [
+      "encode", [
+        test_case "single elements" `Quick test_single_elements;
+        test_case "empty list" `Quick test_empty_list;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

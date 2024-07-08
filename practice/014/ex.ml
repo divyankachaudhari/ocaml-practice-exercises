@@ -1,22 +1,26 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   val duplicate : 'a list -> 'a list
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
-  let example_tests = "duplicate" >::: [
-    "non-empty list" >:: (fun _ ->
-      assert_equal ["a"; "a"; "b"; "b"; "c"; "c"; "c"; "c"; "d"; "d"]
-        (Tested.duplicate ["a"; "b"; "c"; "c"; "d"]));
-    "empty list" >:: (fun _ ->
-      assert_equal [] (Tested.duplicate []));
-  ]
+  let test_non_empty_list () =
+    check (list string) "non-empty list" 
+      ["a"; "a"; "b"; "b"; "c"; "c"; "c"; "c"; "d"; "d"]
+      (Tested.duplicate ["a"; "b"; "c"; "c"; "d"])
 
-  let v = "Duplicate Elements Tests" >::: [
-    example_tests
-  ]
-  let run () = OUnit2.run_test_tt_main v
+  let test_empty_list () =
+    check (list string) "empty list" [] (Tested.duplicate [])
+
+  let run () =
+    let open Alcotest in
+    run "Duplicate Elements Tests" [
+      "duplicate", [
+        test_case "non-empty list" `Quick test_non_empty_list;
+        test_case "empty list" `Quick test_empty_list;
+      ]
+    ]
 end
 
 module Work : Testable = Work.Impl

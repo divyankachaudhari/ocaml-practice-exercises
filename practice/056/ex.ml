@@ -1,4 +1,4 @@
-open OUnit2
+open Alcotest
 
 module type Testable = sig
   type 'a binary_tree =
@@ -10,31 +10,31 @@ end
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
-  let example_tests = "Symmetric Binary Trees" >::: [
-    "test_empty_tree" >:: (fun _ ->
-      assert_equal true (is_symmetric Empty)
-    );
+  let test_empty_tree () =
+    check bool "test_empty_tree" true (is_symmetric Empty)
 
-    "test_single_node" >:: (fun _ ->
-      assert_equal true (is_symmetric (Node ('x', Empty, Empty)))
-    );
+  let test_single_node () =
+    check bool "test_single_node" true (is_symmetric (Node ('x', Empty, Empty)))
 
-    "test_symmetric_tree" >:: (fun _ ->
-      let tree = Node ('a', Node ('b', Empty, Empty), Node ('b', Empty, Empty)) in
-      assert_equal true (is_symmetric tree)
-    );
+  let test_symmetric_tree () =
+    let tree = Node ('a', Node ('b', Empty, Empty), Node ('b', Empty, Empty)) in
+    check bool "test_symmetric_tree" true (is_symmetric tree)
 
-    "test_asymmetric_tree" >:: (fun _ ->
-      let tree = Node ('a', Node ('b', Empty, Empty), Empty) in
-      assert_equal false (is_symmetric tree)
-    );
+  let test_asymmetric_tree () =
+    let tree = Node ('a', Node ('b', Empty, Empty), Empty) in
+    check bool "test_asymmetric_tree" false (is_symmetric tree)
 
-  ]
-
-  let v = "Symmetric Binary Trees Tests" >::: [example_tests]
+  let run () =
+    let open Alcotest in
+    run "Symmetric Binary Trees Tests" [
+      "is_symmetric", [
+        test_case "test_empty_tree" `Quick test_empty_tree;
+        test_case "test_single_node" `Quick test_single_node;
+        test_case "test_symmetric_tree" `Quick test_symmetric_tree;
+        test_case "test_asymmetric_tree" `Quick test_asymmetric_tree;
+      ]
+    ]
 end
-  let run () = OUnit2.run_test_tt_main v
-
 
 module Work : Testable = Work.Impl
 module Answer : Testable = Answer.Impl

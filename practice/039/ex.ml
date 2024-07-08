@@ -1,8 +1,7 @@
-
-open OUnit2
+open Alcotest
 
 module type Testable = sig
-   val all_primes : int -> int -> int list
+  val all_primes : int -> int -> int list
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
@@ -10,14 +9,24 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   73; 79; 83; 89; 97; 101; 103; 107; 109; 113; 127; 131; 137; 139; 149; 151;
   157; 163; 167; 173; 179; 181; 191; 193; 197; 199]
 
-  let v = "List_primes" >::: [
-    "all_primes" >::: [
-      "all" >:: (fun _ -> assert_equal primes (Tested.all_primes 0 200));
-      "some" >:: (fun _ -> assert_equal (List.filter (fun n -> 50 <= n && n <= 150) primes) (Tested.all_primes 50 150));
-      "none" >:: (fun _ -> assert_equal [] (Tested.all_primes 150 50));
+  let test_all_primes () =
+    check (list int) "all_primes" primes (Tested.all_primes 0 200)
+
+  let test_some_primes () =
+    check (list int) "some_primes" (List.filter (fun n -> 50 <= n && n <= 150) primes) (Tested.all_primes 50 150)
+
+  let test_no_primes () =
+    check (list int) "no_primes" [] (Tested.all_primes 150 50)
+
+  let run () =
+    let open Alcotest in
+    run "List_primes" [
+      "all_primes", [
+        test_case "all" `Quick test_all_primes;
+        test_case "some" `Quick test_some_primes;
+        test_case "none" `Quick test_no_primes;
+      ]
     ]
-  ]
-  let run () = OUnit2.run_test_tt_main v
 end
 
 module Work : Testable = Work.Impl
