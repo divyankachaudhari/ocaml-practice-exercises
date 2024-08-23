@@ -30,12 +30,15 @@ XXX
 ├── dune
 ├── dune-project
 ├── ex.ml
+├── statement.md
 └── work
     ├── impl.ml
     └── test
         ├── dune
         └── run.ml
 ```
+
+File `statement.md` contains the exercice description
 
 File `ex.ml` contains:
 - Module type `Testable` the function to be implemented in the exercise
