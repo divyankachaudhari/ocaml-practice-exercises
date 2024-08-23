@@ -30,12 +30,15 @@ XXX
 ├── dune
 ├── dune-project
 ├── ex.ml
+├── statement.md
 └── work
     ├── impl.ml
     └── test
         ├── dune
         └── run.ml
 ```
+
+File `statement.md` contains the exercice description
 
 File `ex.ml` contains:
 - Module type `Testable` the function to be implemented in the exercise
@@ -48,7 +51,7 @@ by the learner's solultion.
 
 Files `test` folders should (hopefully) always be the sames
 
-
+In this folder, run `make answer` to pass the tests on all answers, and `make clean` to delete all build artifacts.
 
 
 

@@ -6,20 +6,18 @@ module type Testable = sig
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
+  let pp_rle_string out = function
+  | Tested.One x -> Format.fprintf out "One %s" x
+  | Many (n, x) -> Format.fprintf out "Many (%i, %s)" n x
+
   let test_single_elements () =
-    check (list (fun (rle: string Tested.rle) -> 
-      match rle with 
-      | One x -> string_of_int 1 ^ x 
-      | Many (n, x) -> string_of_int n ^ x)) 
+    check (list (of_pp pp_rle_string))
       "single elements" 
       [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")]
       (Tested.encode ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"])
 
   let test_empty_list () =
-    check (list (fun (rle: string Tested.rle) -> 
-      match rle with 
-      | One x -> string_of_int 1 ^ x 
-      | Many (n, x) -> string_of_int n ^ x)) 
+    check (list (of_pp pp_rle_string))
       "empty list" [] (Tested.encode [])
 
   let run () =
