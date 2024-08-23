@@ -11,16 +11,16 @@ end
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
-  let tree_pp pp fmt = function
+  let rec tree_pp pp fmt = function
     | Empty -> Format.fprintf fmt "Empty"
     | Node (v, l, r) -> Format.fprintf fmt "Node (%a, %a, %a)" pp v (tree_pp pp) l (tree_pp pp) r
-
+(*
   let tree_equal a b = 
     match a, b with
     | Empty, Empty -> true
     | Node (va, la, ra), Node (vb, lb, rb) -> va = vb && tree_equal la lb && tree_equal ra rb
     | _ -> false
-
+*)
   let test_string_of_tree () =
     let example_tree =
       Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)), Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
@@ -32,7 +32,7 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
     let expected_tree =
       Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)), Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
     in
-    check (testable (tree_pp Format.pp_print_char) tree_equal)
+    check (of_pp (tree_pp Format.pp_print_char))
       "tree_of_string" expected_tree (tree_of_string example_string)
 
   let run () =

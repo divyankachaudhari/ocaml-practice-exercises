@@ -71,10 +71,10 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
         check int "max_nodes 31" 2147483647 (max_nodes 31)
       );
       test_case "Boundary Test h = 32" `Quick (fun _ ->
-        check_raises "max_nodes 32" (Invalid_argument "max_nodes") (fun () -> max_nodes 32)
+        check_raises "max_nodes 32" (Invalid_argument "max_nodes") (fun () -> ignore (max_nodes 32))
       );
       test_case "Boundary Test for large input" `Quick (fun _ ->
-        check_raises "max_nodes max_int" (Invalid_argument "max_nodes") (fun () -> max_nodes max_int)
+        check_raises "max_nodes max_int" (Invalid_argument "max_nodes") (fun () -> ignore (max_nodes max_int))
       );
     ] in
 
