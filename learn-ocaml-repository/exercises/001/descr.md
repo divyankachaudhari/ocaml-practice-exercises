@@ -8,3 +8,4 @@ Write a function `last : 'a list -> 'a option` that returns the last element of 
 # last [];;
 - : 'a option = None
 ```
+${tex`t`}

@@ -1,9 +1,47 @@
 open Test_lib
 open Report
 
+let exercise_last_int =
+  Section ([ Text "Function: "; Code "last with int list" ],
+    test_function_1_against_solution
+      [%ty: int list -> int option]
+      "last"
+      ~gen:0
+      [ []
+      ; [1]
+      ; [1; 2; 3]
+      ; [1; 2; 3; 4; 5]
+      ])
+
+let exercise_last_string =
+  Section ([ Text "Function: "; Code "last with string list" ],
+    test_function_1_against_solution
+      [%ty: string list -> string option]
+      "last"
+      ~gen:0
+      [ []
+      ; ["a"]
+      ; ["a"; "b"; "c"]
+      ; ["a"; "b"; "c"; "d"; "e"]
+      ])
+
+let exercise_last_bool =
+  Section ([ Text "Function: "; Code "last with bool list" ],
+    test_function_1_against_solution
+      [%ty: bool list -> bool option]
+      "last"
+      ~gen:0
+      [ []
+      ; [true]
+      ; [true; false]
+      ; [true; false; true]
+      ; [true; false; true; false; true]
+      ])
+
 let () =
   set_result @@
   ast_sanity_check code_ast @@ fun () ->
-  [
-    Message ([ Text "That was easy!" ], Success 1)
+  [ exercise_last_int
+  ; exercise_last_string
+  ; exercise_last_bool
   ]
