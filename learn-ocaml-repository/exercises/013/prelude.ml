@@ -1,2 +1,4 @@
-(* Some code is loaded in the toplevel before your code. *)
-let greetings = "Hello world!"
+type 'a rle =
+  | One of 'a
+  | Many of int * 'a
+

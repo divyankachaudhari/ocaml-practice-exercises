@@ -1,7 +1,3 @@
-type 'a rle =
-  | One of 'a
-  | Many of int * 'a
-
 let decode list =
   let rec many acc n x =
     if n = 0 then acc else many (x :: acc) (n - 1) x

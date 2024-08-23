@@ -1,7 +1,3 @@
-type 'a rle =
-  | One of 'a
-  | Many of int * 'a
-
 let encode l =
   let create_tuple cnt elem = 
     if cnt = 0 then One elem 
