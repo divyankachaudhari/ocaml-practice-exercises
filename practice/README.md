@@ -51,7 +51,7 @@ by the learner's solultion.
 
 Files `test` folders should (hopefully) always be the sames
 
-
+In this folder, run `make answer` to pass the tests on all answers, and `make clean` to delete all build artifacts.
 
 
 
