@@ -1,5 +1,3 @@
-open Alcotest
-
 module type Testable = sig
   type 'a binary_tree =
     | Empty
@@ -13,16 +11,16 @@ end
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
-  let tree_pp pp fmt = function
+  let rec tree_pp pp fmt = function
     | Empty -> Format.fprintf fmt "Empty"
     | Node (v, l, r) -> Format.fprintf fmt "Node (%a, %a, %a)" pp v (tree_pp pp) l (tree_pp pp) r
-
+(*
   let tree_equal a b = 
     match a, b with
     | Empty, Empty -> true
     | Node (va, la, ra), Node (vb, lb, rb) -> va = vb && tree_equal la lb && tree_equal ra rb
     | _ -> false
-
+*)
   let test_hbal_tree () =
     let open Alcotest in
     run "Height-Balanced Binary Trees" [
@@ -30,12 +28,12 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
         test_case "Test Empty Tree" `Quick (fun _ ->
           let trees = hbal_tree 0 in
           let expected_trees = [Empty] in
-          check (list (tree_pp Format.pp_print_char)) "Empty Tree" expected_trees trees
+          check (list (of_pp (tree_pp Format.pp_print_char))) "Empty Tree" expected_trees trees
         );
         test_case "Test Single Node Tree" `Quick (fun _ ->
           let trees = hbal_tree 1 in
           let expected_trees = [Node ('x', Empty, Empty)] in
-          check (list (tree_pp Format.pp_print_char)) "Single Node Tree" expected_trees trees
+          check (list (of_pp (tree_pp Format.pp_print_char))) "Single Node Tree" expected_trees trees
         ); 
         test_case "Test Height 2 Tree" `Quick (fun _ ->
           let trees = hbal_tree 2 in
@@ -44,7 +42,7 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
             Node ('x', Node ('x', Empty, Empty), Empty);
             Node ('x', Empty, Node ('x', Empty, Empty))
           ] in
-          check (list (tree_pp Format.pp_print_char)) "Height 2 Tree" expected_trees trees;
+          check (list (of_pp (tree_pp Format.pp_print_char))) "Height 2 Tree" expected_trees trees;
         );
       ]
     ]

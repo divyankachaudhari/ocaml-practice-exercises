@@ -14,20 +14,20 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   let rec tree_pp pp fmt = function
     | Empty -> Format.fprintf fmt "Empty"
     | Node (v, l, r) -> Format.fprintf fmt "Node (%a, %a, %a)" pp v (tree_pp pp) l (tree_pp pp) r
-
+(*
   let rec tree_equal a b = 
     match a, b with
     | Empty, Empty -> true
     | Node (va, la, ra), Node (vb, lb, rb) -> va = vb && tree_equal la lb && tree_equal ra rb
     | _ -> false
-
+*)
   let test_construct () =
     let tree = construct [3; 2; 5; 7; 1] in
     let expected_tree =
       Node (3, Node (2, Node (1, Empty, Empty), Empty),
             Node (5, Empty, Node (7, Empty, Empty)))
     in
-    check (testable (tree_pp Format.pp_print_char) tree_equal) "construct_test" expected_tree tree
+    check (of_pp (tree_pp Format.pp_print_int)) "construct_test" expected_tree tree
 
   let test_symmetric () =
     let sym_tree = construct [5; 3; 18; 1; 4; 12; 21] in
