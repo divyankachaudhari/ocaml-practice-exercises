@@ -1,2 +1,6 @@
-{"learnocaml_version":"1","kind":"exercise","stars":0,
- "title":"Tail of a List"}
+{
+  "learnocaml_version": "1",
+  "kind": "exercise",
+  "stars": 1,
+  "title": "Tail of a List"
+}

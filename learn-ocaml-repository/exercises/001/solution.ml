@@ -1,4 +1,4 @@
-let rec last = function 
+let rec last = function
   | [] -> None
   | [ x ] -> Some x
-  | _ :: t -> last t;;
+  | _ :: t -> last t

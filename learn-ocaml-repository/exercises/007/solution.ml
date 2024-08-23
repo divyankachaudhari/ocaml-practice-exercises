@@ -1,6 +1,6 @@
 type 'a node =
-  | One of 'a 
-  | Many of 'a node list
+    | One of 'a 
+    | Many of 'a node list
 
 let flatten list =
   let rec aux acc = function
@@ -8,4 +8,4 @@ let flatten list =
     | One x :: t -> aux (x :: acc) t
     | Many l :: t -> aux (aux acc l) t
   in
-List.rev (aux [] list)
+  List.rev (aux [] list)

@@ -1,2 +1,6 @@
-{"learnocaml_version":"1","kind":"exercise","stars":1,
- "title":"Number of Elements of a List"}
+{
+  "learnocaml_version": "1",
+  "kind": "exercise",
+  "stars": 1,
+  "title": "Length of a List"
+}
