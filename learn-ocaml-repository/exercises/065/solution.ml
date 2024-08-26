@@ -1,7 +1,3 @@
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let layout_binary_tree_2 t =
     let rec height = function
       | Empty -> 0

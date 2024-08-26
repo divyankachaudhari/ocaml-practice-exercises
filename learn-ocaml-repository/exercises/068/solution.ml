@@ -1,7 +1,3 @@
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let rec preorder = function
     | Empty -> []
     | Node (v, l, r) -> v :: (preorder l @ preorder r)

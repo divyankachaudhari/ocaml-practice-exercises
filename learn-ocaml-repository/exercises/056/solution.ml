@@ -1,7 +1,3 @@
-type 'a binary_tree =
-    | Empty
-    | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let rec is_mirror t1 t2 =
   match t1, t2 with
   | Empty, Empty -> true

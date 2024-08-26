@@ -1,9 +1,3 @@
-
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-  
-
 (* Build all trees with given [left] and [right] subtrees. *)
 let add_trees_with left right all =
   let add_right_tree all l =

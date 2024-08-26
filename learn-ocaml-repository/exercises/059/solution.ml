@@ -1,7 +1,3 @@
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let rec tree_height = function
 | Empty -> 0
 | Node (_, left, right) -> 1 + max (tree_height left) (tree_height right)

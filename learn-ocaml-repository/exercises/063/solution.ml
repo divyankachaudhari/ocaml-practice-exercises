@@ -1,7 +1,3 @@
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let rec split_n lst acc n = match (n, lst) with
     | (0, _) -> (List.rev acc, lst)
     | (_, []) -> (List.rev acc, [])

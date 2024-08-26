@@ -1,7 +1,3 @@
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let rec string_of_tree = function
   | Empty -> ""
   | Node(data, l, r) ->

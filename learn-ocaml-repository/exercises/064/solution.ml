@@ -1,7 +1,3 @@
-type 'a binary_tree =
-  | Empty
-  | Node of 'a * 'a binary_tree * 'a binary_tree
-
 let layout_binary_tree_1 t =
     let rec layout depth x_left = function
       (* This function returns a pair: the laid out tree and the first
