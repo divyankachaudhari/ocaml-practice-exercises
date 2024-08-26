@@ -26,7 +26,7 @@ RUN opam install -y ocaml-lsp-server ocamlformat utop alcotest curly
 
 # Copy and set permissions for setup scripts
 COPY setup_codespaces.sh setup_exercise.sh /home/anonymous/
-RUN chmod +x /home/anonymous/setup_codespaces.sh /home/anonymous/setup_exercise.sh
+RUN chmod +x /home/anonymous/setup_codespaces.sh /home/anonymous/scripts/setup_exercise.sh
 
 # Run the setup script
-RUN /home/anonymous/setup_codespaces.sh
+RUN /home/anonymous/scripts/setup_codespaces.sh

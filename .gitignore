@@ -18,3 +18,5 @@ _opam/
 
 # Files that people sometimes accidentally include in their PRs
 *:OECustomProperty
+
+.DS_Store
