@@ -1,9 +1,3 @@
-type bool_expr =
-  | Var of string
-  | Not of bool_expr
-  | And of bool_expr * bool_expr
-  | Or of bool_expr * bool_expr
-
 let rec eval2 a val_a b val_b = function
   | Var x -> if x = a then val_a
               else if x = b then val_b

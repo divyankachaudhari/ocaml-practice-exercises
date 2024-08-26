@@ -4,7 +4,7 @@
 
 # OCaml Practice Exercises
 
-This repository contains practice exercises for learning OCaml. You can use this repository on various platforms: GitHub Codespaces, Replit, and locally with Jupyter Notebook or directly on your machine.
+This repository contains practice exercises for learning OCaml. You can use this repository on various platforms: GitHub Codespaces, Replit, Learn Ocaml and locally with Jupyter Notebook or directly on your machine.
 
 ## Getting Started
 
@@ -19,6 +19,17 @@ This repository contains practice exercises for learning OCaml. You can use this
 git clone https://github.com/divyankachaudhari/ocaml-practice-exercises.git
 cd ocaml-practice-exercises
 ```
+### Available Exercises (for local, github codespaces and replit)
+
+The exercises are located in the `practice` directory. Each exercise includes:
+
+- `work/impl.ml`: Implementation template for you, the learner.
+- `answer/impl.ml`: Reference solution.
+- `ex.ml`: Function signatures and test cases.
+
+Example usage `practice/008`: Run `dune build --root .` to compile and `dune test --root . work` to test your implementation against test cases.s
+
+Exercise descriptions are in the `exercises` directory.
 
 ## Running Locally
 
@@ -41,7 +52,7 @@ cd ocaml-practice-exercises
 2. **Run the Setup Script:**
 
    ```sh
-   ./setup_exercise.sh
+   ./scripts/setup_exercise.sh
    ```
 
 ## Using GitHub Codespaces
@@ -88,17 +99,6 @@ cd ocaml-practice-exercises
      ```
 
 
-## Available Exercises
-
-The exercises are located in the `practice` directory. Each exercise includes:
-
-- `work/impl.ml`: Implementation template for you, the learner.
-- `answer/impl.ml`: Reference solution.
-- `ex.ml`: Function signatures and test cases.
-
-Example usage `practice/008`: Run `dune build --root .` to compile and `dune test --root . work` to test your implementation against test cases.s
-
-Exercise descriptions are in the `exercises` directory.
 
 ## Using Jupyter Notebook
 
@@ -124,7 +124,15 @@ Ensure that you've cloned `ocaml-practice-exercises` and are now in the reposito
    - Copy this URL and paste it into your web browser's address bar. This will open the Jupyter Notebook interface where you can start working with OCaml notebooks.
 
 
-Learn OCaml Platform
+## Using Learn OCaml Platform
+
+We have also converted the exercises into the format that learn ocaml requires. Learn OCaml is a platform that can be used to learn ocaml - especially in classroom like environments.
+
+More information can be found here: https://ocaml-sf.org/learn-ocaml/
+Deploy an instance from documentation here: https://learn-ocaml.readthedocs.io/en/master/howto-deploy-a-learn-ocaml-instance/
+
+`learn-ocaml-repository` is the folder you can use to deploy these set of exercises.
+
 ```
-docker run --platform linux/amd64 --rm -v /Users/divyanka/ocaml-practice-exercises/learn-ocaml-repository:/repository:ro -v learn-ocaml-sync:/sync -p 80:8080 --name learn-ocaml-server ocamlsf/learn-ocaml:master
+docker run --platform linux/amd64 --rm -v <your-path>/ocaml-practice-exercises/learn-ocaml-repository:/repository:ro -v learn-ocaml-sync:/sync -p 80:8080 --name learn-ocaml-server ocamlsf/learn-ocaml:master
 ```
