@@ -1,7 +1,3 @@
-### README.md
-
----
-
 # OCaml Practice Exercises
 
 This repository contains practice exercises for learning OCaml. You can use this repository on various platforms: GitHub Codespaces, Replit, Learn Ocaml and locally with Jupyter Notebook or directly on your machine.
