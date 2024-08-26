@@ -124,8 +124,8 @@ Ensure that you've cloned `ocaml-practice-exercises` and are now in the reposito
 
 We have also converted the exercises into the format that learn ocaml requires. Learn OCaml is a platform that can be used to learn ocaml - especially in classroom like environments.
 
-More information can be found here: https://ocaml-sf.org/learn-ocaml/
-Deploy an instance from documentation here: https://learn-ocaml.readthedocs.io/en/master/howto-deploy-a-learn-ocaml-instance/
+- More information can be found here: https://ocaml-sf.org/learn-ocaml/
+- Deploy an instance from documentation here: https://learn-ocaml.readthedocs.io/en/master/howto-deploy-a-learn-ocaml-instance/
 
 `learn-ocaml-repository` is the folder you can use to deploy these set of exercises.
 

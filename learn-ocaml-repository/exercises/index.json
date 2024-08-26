@@ -1,12 +1,5 @@
 {
   "groups": {
-    "demo": {
-      "title": "Demo exercise pack",
-      "exercises": [
-        "demo",
-        "demo2"
-      ]
-    },
     "ocaml.org exercises": {
       "title": "OCaml.org Exercises",
       "exercises": [
