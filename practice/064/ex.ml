@@ -10,18 +10,18 @@ end
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
 
-  let tree_pp pp fmt = function
+  let rec tree_pp pp fmt = function
     | Empty -> Format.fprintf fmt "Empty"
     | Node (v, l, r) -> Format.fprintf fmt "Node (%a, %a, %a)" pp v (tree_pp pp) l (tree_pp pp) r
-
+(*
   let tree_equal a b = 
     match a, b with
     | Empty, Empty -> true
     | Node (va, la, ra), Node (vb, lb, rb) -> va = vb && tree_equal la lb && tree_equal ra rb
     | _ -> false
-
+*)
   let test_empty_tree () =
-    check (testable (tree_pp Format.pp_print_char) tree_equal) "empty_tree" Empty (layout_binary_tree_1 Empty)
+    check (of_pp (tree_pp (fun fmt (v, x, y) -> Format.fprintf fmt "('%c', %d, %d)" v x y))) "empty_tree" Empty (layout_binary_tree_1 Empty)
 
   let test_example_tree () =
     let expected_layout =
@@ -46,7 +46,7 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
                         leaf 'm'),
             Node ('u', Node ('p', Empty, Node ('s', leaf 'q', Empty)), Empty))
     in
-    check (testable (tree_pp (fun fmt (v, x, y) -> Format.fprintf fmt "('%c', %d, %d)" v x y)) tree_equal)
+    check (of_pp (tree_pp (fun fmt (v, x, y) -> Format.fprintf fmt "('%c', %d, %d)" v x y)))
       "example_tree" expected_layout (layout_binary_tree_1 example_layout_tree)
 
   let run () =

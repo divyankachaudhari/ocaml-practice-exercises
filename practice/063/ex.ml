@@ -8,19 +8,25 @@ module type Testable = sig
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
+  open Tested
+
+  let rec tree_pp pp fmt = function
+    | Empty -> Format.fprintf fmt "Empty"
+    | Node (v, l, r) -> Format.fprintf fmt "Node (%a, %a, %a)" pp v (tree_pp pp) l (tree_pp pp) r
+
   let test_empty_list () =
-    check (testable (fun fmt -> function Empty -> Format.fprintf fmt "Empty" | _ -> Format.fprintf fmt "Not Empty") (=))
+    check (of_pp (tree_pp (fun fmt -> Format.fprintf fmt "%i")))
       "empty_list" Empty (complete_binary_tree [])
 
   let test_single_node () =
     let result = complete_binary_tree [1] in
-    check (testable (fun fmt -> function Node (v, _, _) -> Format.fprintf fmt "Node(%d)" v | _ -> Format.fprintf fmt "Empty") (=))
+    check (of_pp (tree_pp (fun fmt -> Format.fprintf fmt "%i")))
       "single_node" (Node(1, Empty, Empty)) result
 
   let test_small_list () =
     let result = complete_binary_tree [1; 2; 3] in
     let expected_tree = Node(1, Node(2, Empty, Empty), Node(3, Empty, Empty)) in
-    check (testable (fun fmt -> function Node (v, _, _) -> Format.fprintf fmt "Node(%d)" v | _ -> Format.fprintf fmt "Empty") (=))
+    check (of_pp (tree_pp (fun fmt -> Format.fprintf fmt "%i")))
       "small_list" expected_tree result
 
   let test_larger_list () =
@@ -30,7 +36,7 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
         Node(2, Node(4, Empty, Empty), Node(5, Empty, Empty)),
         Node(3, Node(6, Empty, Empty), Empty))
     in
-    check (testable (fun fmt -> function Node (v, _, _) -> Format.fprintf fmt "Node(%d)" v | _ -> Format.fprintf fmt "Empty") (=))
+    check (of_pp (tree_pp (fun fmt -> Format.fprintf fmt "%i")))
       "larger_list" expected_tree result
 
   let run () =
