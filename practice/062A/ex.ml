@@ -18,7 +18,7 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
     check (list char) "two_internals" ['a'] (Tested.internals (Node('a', Node('b', Empty, Empty), Empty)))
 
   let test_three_internals () =
-    check (list char) "three_internals" ['a'] (Tested.internals (Node('a', Node('b', Node('c', Empty, Empty), Empty), Empty)))
+    check (list char) "three_internals" ['b';'a'] (Tested.internals (Node('a', Node('b', Node('c', Empty, Empty), Empty), Empty)))
 
   let run () =
     let open Alcotest in

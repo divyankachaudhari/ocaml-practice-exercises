@@ -2,7 +2,7 @@ type 'a binary_tree =
   | Empty
   | Node of 'a * 'a binary_tree * 'a binary_tree
 
-let internals t = 
+let internals t =
   let rec internals_aux t acc = match t with
     | Empty -> acc
     | Node (_, Empty, Empty) -> acc
