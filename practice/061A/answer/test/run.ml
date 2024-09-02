@@ -1,3 +1,3 @@
-module Test = Ex.Make(Ex.Work)
+module Test = Ex.Make(Ex.Answer)
 
 let () = Test.run ()

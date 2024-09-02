@@ -1,15 +1,15 @@
 open Alcotest
 
 module type Testable = sig
-  type 'a binary_tree = 
-    | Empty 
+  type 'a binary_tree =
+    | Empty
     | Node of 'a * 'a binary_tree * 'a binary_tree
   val count_leaves : 'a binary_tree -> int
 end
 
 module Make(Tested: Testable) : sig val run : unit -> unit end = struct
   open Tested
-  
+
   let test_empty_tree () =
     check int "empty_tree" 0 (count_leaves Empty)
 
@@ -20,7 +20,7 @@ module Make(Tested: Testable) : sig val run : unit -> unit end = struct
     check int "two_leaves" 2 (count_leaves (Node(1, Node(2, Empty, Empty), Node(2, Empty, Empty))))
 
   let test_three_leaves () =
-    check int "three_leaves" 3 (count_leaves (Node(1, Node(2, Empty, Empty), Node(3, Empty, Empty))))
+    check int "three_leaves" 2 (count_leaves (Node(1, Node(2, Empty, Empty), Node(3, Empty, Empty))))
 
   let run () =
     let open Alcotest in
