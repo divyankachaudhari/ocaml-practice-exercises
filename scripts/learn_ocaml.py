@@ -44,7 +44,7 @@ def difficulty_to_stars(difficulty):
 
 
 def create_files(exercise_number, statement, solution, title, stars, practice_folder_path):
-    exercise_folder = f'../learn-ocaml-repository/exercises/{exercise_number:03d}'
+    exercise_folder = f'./learn-ocaml-repository/exercises/{exercise_number:03d}'
     os.makedirs(exercise_folder, exist_ok=True)
 
     # descr.md
@@ -149,9 +149,9 @@ def update_index_json(index_json_path, exercise_numbers):
 
 
 if __name__ == '__main__':
-    exercises_folder = '../exercises'
-    practice_folder = '../practice'
-    index_json_path = '../learn-ocaml-repository/exercises/index.json'
+    exercises_folder = './exercises'
+    practice_folder = './practice'
+    index_json_path = './learn-ocaml-repository/exercises/index.json'
 
     exercise_numbers = []
     for md_file in os.listdir(exercises_folder):

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-EXERCISE_DIR="../practice"
-DESCRIPTION_DIR="../exercises"
+EXERCISE_DIR="./practice"
+DESCRIPTION_DIR="./exercises"
 
 # List available exercises
 echo "Available exercises:"
