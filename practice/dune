@@ -1,0 +1,4 @@
+(rule
+ (alias answer)
+ (deps (alias 001/answer/test/runtest) (alias 002/answer/test/runtest) (alias 003/answer/test/runtest))
+ (action (run echo "-n")))

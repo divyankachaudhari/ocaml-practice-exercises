@@ -1,2 +1,7 @@
+# FIXME: why are the $(for ...) expanding into empty strings
+
 answer:
-	for dir in 0* ; do find $$dir -maxdepth 2 -name answer -exec dune test $$dir/answer ";" ; done
+	dune build $(for i in 0*/answer/test ; do echo @$i/runtest ; done)
+
+work:
+	dune build $(for i in 0*/work/test ; do echo @$i/runtest ; done)
